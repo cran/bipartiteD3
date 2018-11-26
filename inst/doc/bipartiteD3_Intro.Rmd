@@ -1,0 +1,220 @@
+---
+title: "Introduction to bipartiteD3"
+author: "Chris Terry"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to bipartiteD3}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, message=FALSE, warning=FALSE}
+library(r2d3)
+library(bipartite)
+library(purrr) 
+library(dplyr) 
+library(tidyr) 
+library(stringr)
+library(tibble)
+library(RColorBrewer)
+
+library(bipartiteD3)
+```
+
+# Background
+
+Bipartite networks describe the interactions between two discrete sets of nodes, for example plants and their pollinators or parasitoids and their hosts. The analysis of bipartite networks within ecology is commonly done with the bipartite package  (Dormann et al.) which includes routines for a wide variety of network analyses. 
+
+
+Bipartite networks are often highly complex and visualising their structure is a considerable challenge. It is very common that bipartite networks include so many overlapping interactions that it becomes challenging to interpret. Furthermore there has recently been concerted effort within ecology to compare multiple networks simultaneously across time, space of interaction type. 
+
+Recent developments to improve the connections between R code and other coding languages make it possible to smoothly relate the data-analysis power and familiarity of R to languages and packages that are well suited to interactive plots. The D3 (Data-Driven Documents) is a JavaScript library for visualising and interacting with data, that is now supported within RStudio. However, coding in JavaScript is significantly different to R coding and for most ecologists it would not be a worthwhile investment in time to learn how to use an additional language
+
+This package is designed to provide a smooth interface from R and data formats used in the bipartite package to make html widgets containing bipartite graphs that can be explored interactively.
+
+These can either be viewed in RStudio v1.2+ or in a browser.
+
+# Basic example and comparison
+
+
+```{r}
+
+testdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3"), 
+lower = c("plant1","plant2","plant1","plant2","plant3","plant4"), 
+webID = c("meadow","meadow","meadow","meadow","meadow","meadow"), freq=c(5,9,1,2,3,7))
+bipartite::frame2webs(testdata)-> SmallTestWeb
+
+SmallTestWeb
+
+bipartite::plotweb(SmallTestWeb$meadow)
+
+# If nothing appears then either update RStudio to version 1.2 or open in a modern web browser
+bipartite_D3(SmallTestWeb)
+```
+
+# Simultaneous Webs
+
+```{r}
+Doubletestdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3", "bee1","bee1","bee1","bee2","bee1","bee3"), 
+lower = c("plant1","plant2","plant1","plant2","plant3","plant4","plant2","plant1","plant2","plant3","plant4", 'plant5'), 
+webID = c("meadow","meadow","meadow","meadow","meadow","meadow","bog","bog","bog","bog","bog","bog"), freq=c(5,9,1,2,3,7, 2,3,4,7,4,2))
+frame2webs(Doubletestdata)-> DoubleTestWeb
+
+bipartite_D3(data =DoubleTestWeb, colouroption = 'brewer', filename = 'demo1')
+
+```
+
+# Data format
+
+The core function bipartite_D3() can take in the matrix formats used by bipartite, either as a discrete matrix, a list of matrices or an array, as may be output by frame2webs() or webs2array(). It's native format however is a data frame where each row is an interaction. The first column details the name of the primary level species, the second column the secondary level species and the third the strength of the link. Additional webs can be added by adding fourth and subsequent columns, each named to indicate the site. Hence:
+
+
+```{r}
+List2DF(DoubleTestWeb)
+```
+
+
+# Customisation Options
+
+It is worth noting that many options can be set directly using the CSS file, but here is not really the place to describe that.
+
+##Colour
+
+### Which level to colour by?
+
+```{r}
+bipartite_D3(SmallTestWeb, colouroption = 'brewer', ColourBy = 1, filename = 'demo2')
+bipartite_D3(SmallTestWeb, colouroption = 'brewer', ColourBy = 2, filename = 'demo3')
+
+```
+
+### Monochrome, with highlighting
+
+```{r}
+bipartite_D3(SmallTestWeb, monoChromeCol = 'BLUE',HighlightLab = 'plant2',
+            HighlightCol = 'PINK', ColourBy = 1 , filename = 'demo4')
+```
+
+### RColorBrewer
+
+```{r}
+bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo5')
+```
+
+### Manual
+
+```{r}
+bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo6')
+```
+
+### Highlighting
+
+```{r}
+
+ManualColours<- c(bee1='green', bee2='red', bee3='yellow')
+
+bipartite_D3(SmallTestWeb, colouroption = 'manual',
+            NamedColourVector = ManualColours, ColourBy = 2,
+            filename = 'demo7')
+```
+
+
+## Orientation
+
+```{r}
+bipartite_D3(SmallTestWeb,colouroption = 'brewer',
+            Orientation = 'horizontal', filename = 'demo8')
+```
+
+
+## Labels
+
+### Main Labels
+
+```{r}
+bipartite_D3(SmallTestWeb, PrimaryLab = 'Flowers',
+            SecondaryLab = 'Pollinators',
+            SiteNames = 'Nice Meadow', filename = 'demo9')
+```
+
+
+### Species Labels
+
+These are inherited directly from the data. If you want to change these it is best to do it there.
+
+
+### Edge mode
+
+
+```{r}
+bipartite_D3(SmallTestWeb,EdgeMode = 'straight', filename = 'demo10')
+```
+
+
+### Sorting
+
+Can supply the order of either sides of the bipartite diagram. 
+
+```{r}
+
+df<-List2DF(SmallTestWeb)
+
+
+# To sort primary by total size:
+df %>%
+  group_by(Primary) %>%
+  summarise(Total=sum(meadow))%>%
+  arrange(Total)-> SortDf
+
+# To sort secondary manually
+
+SortSec <- c('bee2', 'bee3', 'bee1')
+
+bipartite_D3(df, SortPrimary = SortDf$Primary, SortSecondary = SortSec,
+            filename = 'demo11')
+```
+
+
+# Sizing and Positioning
+
+The sizing and positioning of the various elements is one of the hardest features to balance. Large plots need to have sufficient space, but too much leads to large white gaps. With a more complex plot it is worth playing around with the various parameters. These are
+
+  MainFigSize : The total size of the html canvas or widget that the figure is put in. By default it is 700x700 per facet. Increase this if things look cramped, the sides of the plot are uneven or bars are getting inverted.
+  
+  IndivFigSize : This controls the size of the area in which the links are plotted. Only really worth changing in most cases if you want to change the ratios in some way
+  
+  mp: This sets the number of rows and columns to plot the individual facets of multiple graphs. By default it assumes you want just one row. 
+  
+BarSize: This the thickness of the bars. Defaults to 35
+
+MinWidth: This sets the size to which each segment shrinks too when others are highlighted
+
+Pad: Padding between boxes to make them more readable. 
+
+BoxLabPos: This is two numbers for primary and secondary levels that shift the label text. Larger values shift the text away from the graph. By default it takes a guess based on the maximum number of characters.
+
+PercPos: This does the equivalent for the percentages
+
+```{r}
+# With larger datasets the default can look a bit awkward, with overlaps and inversions
+
+data(Safariland, vazquenc, package = 'bipartite')
+data2<-bipartite::webs2array(Safariland, vazquenc)
+
+bipartite_D3(data = data2, filename = 'demo12')
+
+#Adjusting Sizes to fit a complex figure:
+
+bipartite_D3(data = data2,
+            mp=c(2,1),
+            MainFigSize = c(800, 1500), 
+            IndivFigSize = c(200, 600),
+            BoxLabPos = c(20, 20),
+            PercPos = c(200,200),
+            BarSize = 20,
+            MinWidth = 5,
+            Pad=5,
+            filename = 'demo13')
+
+```
