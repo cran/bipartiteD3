@@ -17,11 +17,13 @@
 #' @return A data.frame where the first column is the primary interactor, the second the secondary interactor and subsequent named columns detail the link strengths
 #' @import dplyr
 #' @import tidyr
-#' @import bipartite
 #' @examples
+#'
+#' \dontrun{
 #' data(Safariland, vazquenc, package='bipartite')
 #' allin1 <- bipartite::webs2array(Safariland, vazquenc)
 #' Array2DF(allin1)
+#' }
 #' @export
 Array2DF <- function(Array,
                      PrimaryLab = 'Primary',

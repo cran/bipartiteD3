@@ -7,18 +7,18 @@ vignette: >
   %\VignetteIndexEntry{Introduction to bipartiteD3}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteDepends{bipartite}
 ---
 
 ```{r setup, message=FALSE, warning=FALSE}
 library(r2d3)
-library(bipartite)
+library(bipartite )
 library(purrr) 
 library(dplyr) 
 library(tidyr) 
 library(stringr)
 library(tibble)
 library(RColorBrewer)
-
 library(bipartiteD3)
 ```
 
@@ -26,14 +26,14 @@ library(bipartiteD3)
 
 Bipartite networks describe the interactions between two discrete sets of nodes, for example plants and their pollinators or parasitoids and their hosts. The analysis of bipartite networks within ecology is commonly done with the bipartite package  (Dormann et al.) which includes routines for a wide variety of network analyses. 
 
-
 Bipartite networks are often highly complex and visualising their structure is a considerable challenge. It is very common that bipartite networks include so many overlapping interactions that it becomes challenging to interpret. Furthermore there has recently been concerted effort within ecology to compare multiple networks simultaneously across time, space of interaction type. 
 
 Recent developments to improve the connections between R code and other coding languages make it possible to smoothly relate the data-analysis power and familiarity of R to languages and packages that are well suited to interactive plots. The D3 (Data-Driven Documents) is a JavaScript library for visualising and interacting with data, that is now supported within RStudio. However, coding in JavaScript is significantly different to R coding and for most ecologists it would not be a worthwhile investment in time to learn how to use an additional language
 
 This package is designed to provide a smooth interface from R and data formats used in the bipartite package to make html widgets containing bipartite graphs that can be explored interactively.
 
-These can either be viewed in RStudio v1.2+ or in a browser.
+These can either be viewed in RStudio v1.2+ or in a browser. The `r2D3` package also provides the `save_d3_png` and `save_d3_html` functions to directly save d3 objects. When used together gist.github.com and bl.ocks.org together provide a route to straightforward free public hosting of D3 widgets, which can be useful for sharing.
+
 
 # Basic example and comparison
 
@@ -59,7 +59,7 @@ bipartite_D3(SmallTestWeb)
 Doubletestdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3", "bee1","bee1","bee1","bee2","bee1","bee3"), 
 lower = c("plant1","plant2","plant1","plant2","plant3","plant4","plant2","plant1","plant2","plant3","plant4", 'plant5'), 
 webID = c("meadow","meadow","meadow","meadow","meadow","meadow","bog","bog","bog","bog","bog","bog"), freq=c(5,9,1,2,3,7, 2,3,4,7,4,2))
-frame2webs(Doubletestdata)-> DoubleTestWeb
+bipartite::frame2webs(Doubletestdata)-> DoubleTestWeb
 
 bipartite_D3(data =DoubleTestWeb, colouroption = 'brewer', filename = 'demo1')
 
@@ -102,13 +102,7 @@ bipartite_D3(SmallTestWeb, monoChromeCol = 'BLUE',HighlightLab = 'plant2',
 bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo5')
 ```
 
-### Manual
-
-```{r}
-bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo6')
-```
-
-### Highlighting
+### Manual, colouring by secondary layer
 
 ```{r}
 
@@ -121,6 +115,8 @@ bipartite_D3(SmallTestWeb, colouroption = 'manual',
 
 
 ## Orientation
+
+Note that horizontal isn't yet supported as well as vertical, and labels often overlap when interactions are rare. Generally it is not recommended. 
 
 ```{r}
 bipartite_D3(SmallTestWeb,colouroption = 'brewer',
@@ -141,10 +137,24 @@ bipartite_D3(SmallTestWeb, PrimaryLab = 'Flowers',
 
 ### Species Labels
 
-These are inherited directly from the data. If you want to change these it is best to do it there.
+These are inherited directly from the data. If you want to change these it is best to do that upstream of bipartite_d3. 
 
 
-### Edge mode
+## Percentage Labels
+
+If you have many small interactions, that would otherwise be 0, can extend the number of decimal places shown:
+
+```{r}
+bipartite_D3(SmallTestWeb, PercentageDecimals = 2, filename = 'demo9.2')
+```
+
+
+## Other properties of the Labels
+
+To change other properties of the labels, the easiest way is to change the CSS file, then set the `CSS_Output_Supress` argument to `TRUE`. The CSS file controls things like the size, color and font of the labels. Detailing this is beyond the scope of this vignette. If you want an easy way experiment with this, you can open a html document in a browser and use the 'inspect element' or equivalent feature to see how the different elements relate to each other. 
+
+
+## Edge mode
 
 
 ```{r}
@@ -152,7 +162,7 @@ bipartite_D3(SmallTestWeb,EdgeMode = 'straight', filename = 'demo10')
 ```
 
 
-### Sorting
+## Sorting
 
 Can supply the order of either sides of the bipartite diagram. 
 
@@ -176,9 +186,16 @@ bipartite_D3(df, SortPrimary = SortDf$Primary, SortSecondary = SortSec,
 ```
 
 
+Also included is a function that finds an order that minimises crossovers, by first dividing the networks by compartments, then sorting by compartment size, then minimising within-compartment cross-over using a CCA, similar to that used by the `plotweb` function in `bipartite`. These orders can be then passed to `bipartite_D3()`
+
+```{r}
+OrderByCrossover(Safariland)
+```
+
+
 # Sizing and Positioning
 
-The sizing and positioning of the various elements is one of the hardest features to balance. Large plots need to have sufficient space, but too much leads to large white gaps. With a more complex plot it is worth playing around with the various parameters. These are
+The sizing and positioning of the various elements is one of the hardest features to balance. Large plots need to have sufficient space, but too much leads to large white gaps. With a more complex plot it is worth playing around with the various parameters. These are:
 
   MainFigSize : The total size of the html canvas or widget that the figure is put in. By default it is 700x700 per facet. Increase this if things look cramped, the sides of the plot are uneven or bars are getting inverted.
   
@@ -215,6 +232,7 @@ bipartite_D3(data = data2,
             BarSize = 20,
             MinWidth = 5,
             Pad=5,
+            PercentageDecimals = 2,
             filename = 'demo13')
 
 ```

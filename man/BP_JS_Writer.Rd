@@ -13,7 +13,8 @@ BP_JS_Writer(df, filename = "JSBP", colouroption = c("monochrome",
   BarSize = 35, Orientation = c("vertical", "horizontal")[1],
   EdgeMode = c("straight", "smooth")[2], AxisLabels = NULL,
   FigureLabel = NULL, BoxLabPos = NULL, IncludePerc = TRUE,
-  PercPos = NULL, CSS_Output_Supress = FALSE, PRINT = FALSE)
+  PercentageDecimals = 0, PercPos = NULL, CSS_Output_Supress = FALSE,
+  PRINT = FALSE)
 }
 \arguments{
 \item{df}{data.frame containing the names of the interactors and the link strengths. bipartite package data need to be passed through Matrix2DF or Array2DF first.}
@@ -42,7 +43,7 @@ BP_JS_Writer(df, filename = "JSBP", colouroption = c("monochrome",
 
 \item{mp}{Numeric vector c(rows, columns)}
 
-\item{MinWidth}{Numeric. Minumum size to shrink unselected interactors to.}
+\item{MinWidth}{Numeric. Minimum size to shrink unselected interactors to.}
 
 \item{Pad}{Numeric. Gap between species.}
 
@@ -54,7 +55,7 @@ BP_JS_Writer(df, filename = "JSBP", colouroption = c("monochrome",
 
 \item{EdgeMode}{Set to 'straight' to avoid curly lines.}
 
-\item{AxisLabels}{c('Primary','Secondary') to override column names of dataframe}
+\item{AxisLabels}{c('Primary','Secondary') to overide column names of dataframe}
 
 \item{FigureLabel}{Character vector, to allow overide of use of df column names}
 
@@ -62,9 +63,11 @@ BP_JS_Writer(df, filename = "JSBP", colouroption = c("monochrome",
 
 \item{IncludePerc}{Boolean. whether or not to show percentage links}
 
-\item{PercPos}{c(x_p,x_s) To adjust postion of percentages.  Default is based on maximum length of labels.}
+\item{PercentageDecimals}{Number of decimal places to display percentages to. Useful if rare species are rounded to 0.}
 
-\item{CSS_Output_Supress}{Boolean. Set to TRUE if you have changed the CSS file manually and don't want it overriden}
+\item{PercPos}{c(x_p,x_s) To adjust position of percentages.  Default is based on maximum length of labels.}
+
+\item{CSS_Output_Supress}{Boolean. Set to TRUE if you have changed the CSS file manually and don't want it over written}
 
 \item{PRINT}{Boolean. Output generated JavaScript to screen?}
 }

@@ -1,13 +1,12 @@
 ## ----setup, message=FALSE, warning=FALSE---------------------------------
 library(r2d3)
-library(bipartite)
+library(bipartite )
 library(purrr) 
 library(dplyr) 
 library(tidyr) 
 library(stringr)
 library(tibble)
 library(RColorBrewer)
-
 library(bipartiteD3)
 
 ## ------------------------------------------------------------------------
@@ -28,7 +27,7 @@ bipartite_D3(SmallTestWeb)
 Doubletestdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3", "bee1","bee1","bee1","bee2","bee1","bee3"), 
 lower = c("plant1","plant2","plant1","plant2","plant3","plant4","plant2","plant1","plant2","plant3","plant4", 'plant5'), 
 webID = c("meadow","meadow","meadow","meadow","meadow","meadow","bog","bog","bog","bog","bog","bog"), freq=c(5,9,1,2,3,7, 2,3,4,7,4,2))
-frame2webs(Doubletestdata)-> DoubleTestWeb
+bipartite::frame2webs(Doubletestdata)-> DoubleTestWeb
 
 bipartite_D3(data =DoubleTestWeb, colouroption = 'brewer', filename = 'demo1')
 
@@ -49,9 +48,6 @@ bipartite_D3(SmallTestWeb, monoChromeCol = 'BLUE',HighlightLab = 'plant2',
 bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo5')
 
 ## ------------------------------------------------------------------------
-bipartite_D3(SmallTestWeb,colouroption = 'brewer',BrewerPalette ='Dark2', filename = 'demo6')
-
-## ------------------------------------------------------------------------
 
 ManualColours<- c(bee1='green', bee2='red', bee3='yellow')
 
@@ -67,6 +63,9 @@ bipartite_D3(SmallTestWeb,colouroption = 'brewer',
 bipartite_D3(SmallTestWeb, PrimaryLab = 'Flowers',
             SecondaryLab = 'Pollinators',
             SiteNames = 'Nice Meadow', filename = 'demo9')
+
+## ------------------------------------------------------------------------
+bipartite_D3(SmallTestWeb, PercentageDecimals = 2, filename = 'demo9.2')
 
 ## ------------------------------------------------------------------------
 bipartite_D3(SmallTestWeb,EdgeMode = 'straight', filename = 'demo10')
@@ -90,6 +89,9 @@ bipartite_D3(df, SortPrimary = SortDf$Primary, SortSecondary = SortSec,
             filename = 'demo11')
 
 ## ------------------------------------------------------------------------
+OrderByCrossover(Safariland)
+
+## ------------------------------------------------------------------------
 # With larger datasets the default can look a bit awkward, with overlaps and inversions
 
 data(Safariland, vazquenc, package = 'bipartite')
@@ -108,6 +110,7 @@ bipartite_D3(data = data2,
             BarSize = 20,
             MinWidth = 5,
             Pad=5,
+            PercentageDecimals = 2,
             filename = 'demo13')
 
 

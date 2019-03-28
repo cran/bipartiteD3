@@ -32,10 +32,11 @@ Note a list of this format can be passed directly to bipartite_D3 since it will 
 }
 \examples{
 
-testdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3"),
+\dontrun{ testdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3"),
 lower = c("plant1","plant2","plant1","plant2","plant3","plant4"),
 webID = c("meadow","meadow","meadow","meadow","bog","bog"), freq=c(5,9,1,2,3,7))
 bipartite::frame2webs(testdata, type.out = 'list')-> SmallTestWeb
 
 List2DF(SmallTestWeb)
+}
 }

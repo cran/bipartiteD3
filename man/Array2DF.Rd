@@ -31,7 +31,10 @@ the names of each of the sites
 Note an array of this format can be passed directly to bipartite_D3 since it will test for an array and apply Array2DF() anyway.
 }
 \examples{
+
+\dontrun{
 data(Safariland, vazquenc, package='bipartite')
 allin1 <- bipartite::webs2array(Safariland, vazquenc)
 Array2DF(allin1)
+}
 }

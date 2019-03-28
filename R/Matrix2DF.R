@@ -15,7 +15,6 @@
 #' @param SiteLab Name for the site
 #' @import dplyr
 #' @import tidyr
-#' @import bipartite
 #' @return A data.frame where the first column is the primary interactor, the second the secondary
 #' interactor and third column detail the link strengths.
 #' @examples

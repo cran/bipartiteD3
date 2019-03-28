@@ -17,15 +17,15 @@
 #' @return A data.frame where the first column is the primary interactor, the second the secondary interactor and subsequent named columns detail the link strengths
 #' @import dplyr
 #' @import tidyr
-#' @import bipartite
 #' @examples
 #'
-#' testdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3"),
+#'\dontrun{ testdata <- data.frame(higher = c("bee1","bee1","bee1","bee2","bee1","bee3"),
 #' lower = c("plant1","plant2","plant1","plant2","plant3","plant4"),
 #' webID = c("meadow","meadow","meadow","meadow","bog","bog"), freq=c(5,9,1,2,3,7))
 #' bipartite::frame2webs(testdata, type.out = 'list')-> SmallTestWeb
 #'
 #' List2DF(SmallTestWeb)
+#' }
 #' @export
 List2DF <- function(List,
                      PrimaryLab = 'Primary',

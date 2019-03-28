@@ -7,7 +7,7 @@
 LoadVisJS()
 }
 \description{
-Downloads source code for the open source vis JavaScript libary from vizjs.org if it is not already present
+Downloads source code for the open source vis JavaScript library from vizjs.org if it is not already present
 in working directory. Uses v1.1.0
 }
 \details{
