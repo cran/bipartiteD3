@@ -236,3 +236,14 @@ bipartite_D3(data = data2,
             filename = 'demo13')
 
 ```
+
+# Tidying up
+
+The scripts above leave behind two JavaScript files, the library `vizjs.js`, and the graph itself which by default is called `JSBP.js`, and a matching style file `JSBP.css`. Most of the time these are no problem, and in fact are actually useful to be able to inspect and directly edit. However, to keep the CRAN checks happy, this tidies them up. 
+
+```{r}
+file.remove('vizjs.js')
+file.remove('JSBP.js')
+file.remove('JSBP.css')
+```
+

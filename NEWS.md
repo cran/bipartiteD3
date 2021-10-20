@@ -1,5 +1,11 @@
 # News
 
+## v0.3.0 Patch updates to d3
+
+ Updates to d3 and r2d3 had deprecated d3.nest - this version points towards version 5 of d3. 
+ 
+ Also updated some other parts to comply with new CRAN checks. 
+
 ## v0.2.0 Several patches and improvements
  
  Updated vignette to point out r2d3 functions to save d3 objects and other updates

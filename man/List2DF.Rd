@@ -4,8 +4,12 @@
 \alias{List2DF}
 \title{Convert bipartite-style list of matrices to dataframe}
 \usage{
-List2DF(List, PrimaryLab = "Primary", SecondaryLab = "Secondary",
-  SiteNames = NULL)
+List2DF(
+  List,
+  PrimaryLab = "Primary",
+  SecondaryLab = "Secondary",
+  SiteNames = NULL
+)
 }
 \arguments{
 \item{List}{An list of bipartite format matrices}

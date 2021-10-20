@@ -4,8 +4,12 @@
 \alias{Matrix2DF}
 \title{Convert a bipartite-style matrix to dataframe}
 \usage{
-Matrix2DF(Matrix, PrimaryLab = "Primary", SecondaryLab = "Secondary",
-  SiteLab = "Site")
+Matrix2DF(
+  Matrix,
+  PrimaryLab = "Primary",
+  SecondaryLab = "Secondary",
+  SiteLab = "Site"
+)
 }
 \arguments{
 \item{Matrix}{Bipartite network in matrix format}

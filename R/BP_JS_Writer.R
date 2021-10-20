@@ -43,6 +43,10 @@
 #'
 #' BP_JS_Writer(testdata,PRINT=TRUE)
 #'
+#'## tidy up (to keep CRAN happy, not needed in real life use)
+#'file.remove('vizjs.js')
+#'file.remove('JSBP.js')
+#'file.remove('JSBP.css')
 #'
 #' @export
 BP_JS_Writer<- function (df, filename = "JSBP", colouroption = c("monochrome",
@@ -221,61 +225,4 @@ BP_JS_Writer<- function (df, filename = "JSBP", colouroption = c("monochrome",
 }
 
 
-bipartite_D3<-function (data, filename = "bipartiteD3Script", PrimaryLab = "Primary",
-                        SecondaryLab = "Secondary", SiteNames = NULL, colouroption = c("monochrome",
-                                                                                       "brewer", "manual")[1], HighlightLab = "Unlinked", HighlightCol = "#3366CC",
-                        monoChromeCol = "rgb(56,43,61)", ColourBy = c(1, 2)[2], BrewerPalette = "Accent",
-                        NamedColourVector, MainFigSize = NULL, SortPrimary = NULL,
-                        SortSecondary = NULL, mp = c(1, 1), MinWidth = 10, Pad = 1,
-                        IndivFigSize = c(200, 400), BarSize = 35,
-                        Orientation = c("vertical", "horizontal")[1],
-                        EdgeMode = c("straight", "smooth")[2],
-                        PercentageDecimals = 0,
-                        BoxLabPos = NULL, IncludePerc = TRUE, PercPos = NULL, CSS_Output_Supress = FALSE,
-                        PRINT = FALSE)
-{
-  df <- NULL
-  if (is.data.frame(data)) {
-    df <- data
-  }
-  else {
-    if (is.list(data)) {
-      df <- List2DF(data, PrimaryLab, SecondaryLab, SiteNames)
-    }
-    else {
-      dimensions <- length(dim(data))
-      if (dimensions == 3) {
-        df <- Array2DF(data, PrimaryLab, SecondaryLab,
-                       SiteNames)
-      }
-      if (dimensions == 2) {
-        df <- Matrix2DF(data, PrimaryLab, SecondaryLab,
-                        SiteNames)
-      }
-    }
-  }
-  if (is.null(df)) {
-    stop("invalid data input. Valid forms are data frame, bipartite style matrix, list orarray")
-  }
-  if ((mp[2] * mp[1]) > (ncol(df) - 2)) {
-    warning("Making too many facets. Are you sure mp is set ok?")
-  }
-  if ((mp[2] * mp[1]) < (ncol(df) - 2)) {
-    warning("Making too few facets. Guessing you want 1 row")
-    mp[2] <- ncol(df) - 2
-  }
-  if (is.null(MainFigSize)) {
-    MainFigSize <- c(mp[2] * 700, mp[1] * 700)
-  }
-  BP_JS_Writer(df, filename, colouroption, HighlightLab, HighlightCol,
-               monoChromeCol, ColourBy, BrewerPalette, NamedColourVector,
-               MainFigSize, SortPrimary, SortSecondary, mp, MinWidth,
-               Pad, IndivFigSize, BarSize, Orientation, EdgeMode, AxisLabels = c(PrimaryLab,
-                                                                                 SecondaryLab), FigureLabel = SiteNames,
-               PercentageDecimals, BoxLabPos,
-               IncludePerc, PercPos, CSS_Output_Supress, PRINT)
-  LoadVisJS()
-  r2d3::r2d3(data = NA, script = paste0(filename, ".js"), height = MainFigSize[2],
-             width = MainFigSize[1], dependencies = "vizjs.js")
-}
 

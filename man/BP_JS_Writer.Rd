@@ -4,17 +4,35 @@
 \alias{BP_JS_Writer}
 \title{Generate JavaScript file for a bipartite network}
 \usage{
-BP_JS_Writer(df, filename = "JSBP", colouroption = c("monochrome",
-  "brewer", "manual")[1], HighlightLab = "Unlinked",
-  HighlightCol = "#3366CC", monoChromeCol = "rgb(56,43,61)",
-  ColourBy = c(1, 2)[2], BrewerPalette = "Accent", NamedColourVector,
-  MainFigSize = NULL, SortPrimary = NULL, SortSecondary = NULL,
-  mp = c(1, 1), MinWidth = 10, Pad = 1, IndivFigSize = c(200, 400),
-  BarSize = 35, Orientation = c("vertical", "horizontal")[1],
-  EdgeMode = c("straight", "smooth")[2], AxisLabels = NULL,
-  FigureLabel = NULL, BoxLabPos = NULL, IncludePerc = TRUE,
-  PercentageDecimals = 0, PercPos = NULL, CSS_Output_Supress = FALSE,
-  PRINT = FALSE)
+BP_JS_Writer(
+  df,
+  filename = "JSBP",
+  colouroption = c("monochrome", "brewer", "manual")[1],
+  HighlightLab = "Unlinked",
+  HighlightCol = "#3366CC",
+  monoChromeCol = "rgb(56,43,61)",
+  ColourBy = c(1, 2)[2],
+  BrewerPalette = "Accent",
+  NamedColourVector,
+  MainFigSize = NULL,
+  SortPrimary = NULL,
+  SortSecondary = NULL,
+  mp = c(1, 1),
+  MinWidth = 10,
+  Pad = 1,
+  IndivFigSize = c(200, 400),
+  BarSize = 35,
+  Orientation = c("vertical", "horizontal")[1],
+  EdgeMode = c("straight", "smooth")[2],
+  AxisLabels = NULL,
+  FigureLabel = NULL,
+  BoxLabPos = NULL,
+  IncludePerc = TRUE,
+  PercentageDecimals = 0,
+  PercPos = NULL,
+  CSS_Output_Supress = FALSE,
+  PRINT = FALSE
+)
 }
 \arguments{
 \item{df}{data.frame containing the names of the interactors and the link strengths. bipartite package data need to be passed through Matrix2DF or Array2DF first.}
@@ -87,5 +105,9 @@ lower = c("plant1","plant2","plant1","plant2","plant3","plant4"),
 
 BP_JS_Writer(testdata,PRINT=TRUE)
 
+## tidy up (to keep CRAN happy, not needed in real life use)
+file.remove('vizjs.js')
+file.remove('JSBP.js')
+file.remove('JSBP.css')
 
 }

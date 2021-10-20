@@ -4,18 +4,36 @@
 \alias{bipartite_D3}
 \title{Generate interactive bipartite networks}
 \usage{
-bipartite_D3(data, filename = "bipartiteD3Script",
-  PrimaryLab = "Primary", SecondaryLab = "Secondary",
-  SiteNames = NULL, colouroption = c("monochrome", "brewer",
-  "manual")[1], HighlightLab = "Unlinked", HighlightCol = "#3366CC",
-  monoChromeCol = "rgb(56,43,61)", ColourBy = c(1, 2)[2],
-  BrewerPalette = "Accent", NamedColourVector, MainFigSize = NULL,
-  SortPrimary = NULL, SortSecondary = NULL, mp = c(1, 1),
-  MinWidth = 10, Pad = 1, IndivFigSize = c(200, 400), BarSize = 35,
+bipartite_D3(
+  data,
+  filename = "bipartiteD3Script",
+  PrimaryLab = "Primary",
+  SecondaryLab = "Secondary",
+  SiteNames = NULL,
+  colouroption = c("monochrome", "brewer", "manual")[1],
+  HighlightLab = "Unlinked",
+  HighlightCol = "#3366CC",
+  monoChromeCol = "rgb(56,43,61)",
+  ColourBy = c(1, 2)[2],
+  BrewerPalette = "Accent",
+  NamedColourVector,
+  MainFigSize = NULL,
+  SortPrimary = NULL,
+  SortSecondary = NULL,
+  mp = c(1, 1),
+  MinWidth = 10,
+  Pad = 1,
+  IndivFigSize = c(200, 400),
+  BarSize = 35,
   Orientation = c("vertical", "horizontal")[1],
-  EdgeMode = c("straight", "smooth")[2], BoxLabPos = NULL,
-  IncludePerc = TRUE, PercentageDecimals = 0, PercPos = NULL,
-  CSS_Output_Supress = FALSE, PRINT = FALSE)
+  EdgeMode = c("straight", "smooth")[2],
+  BoxLabPos = NULL,
+  IncludePerc = TRUE,
+  PercentageDecimals = 0,
+  PercPos = NULL,
+  CSS_Output_Supress = FALSE,
+  PRINT = FALSE
+)
 }
 \arguments{
 \item{data}{Food web or webs to be plotted. Can be either in data.frame format (Sp1,Sp2, Site1, Site2 etc) or bipartite style matrix, list of matrices or array.}

@@ -4,8 +4,12 @@
 \alias{Array2DF}
 \title{Convert bipartite-style arrays to dataframe}
 \usage{
-Array2DF(Array, PrimaryLab = "Primary", SecondaryLab = "Secondary",
-  SiteNames = NULL)
+Array2DF(
+  Array,
+  PrimaryLab = "Primary",
+  SecondaryLab = "Secondary",
+  SiteNames = NULL
+)
 }
 \arguments{
 \item{Array}{An array of bipartite format}

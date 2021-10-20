@@ -170,6 +170,7 @@ bipartite_D3<- function(data,
   LoadVisJS()
 
   r2d3::r2d3(data = NA, script = paste0(filename,".js"),
-       height= MainFigSize[2], width= MainFigSize[1] ,
+         height= MainFigSize[2], width= MainFigSize[1] ,
+         d3_version = '5',
        dependencies ="vizjs.js")
 }

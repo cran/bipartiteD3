@@ -3,8 +3,9 @@
 \docType{package}
 \name{bipartiteD3}
 \alias{bipartiteD3}
-\alias{bipartiteD3-package}
 \title{Interactive bipartite graphs}
 \description{
-Interactive bipartite graphs
+This package can generate interactive bipartite graphs through the d3 javascript
+library, direct from data formats used in ecology. Please see the vignette for
+examples
 }

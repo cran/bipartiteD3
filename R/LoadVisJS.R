@@ -13,10 +13,10 @@ LoadVisJS <- function(){
     try({
       Hash<-downloader::sha_url('http://vizjs.org/viz.v1.1.0.min.js')
       if(Hash == "295e915d475fdf1c0d7db13668b6b0b526a8e910"){ # Security hash
-        downloader::download('http://vizjs.org/viz.v1.1.0.min.js','vizjs.js' )
+        downloader::download('http://vizjs.org/viz.v1.1.0.min.js', 'vizjs.js' )
       }else{
         warning("Hash of http://vizjs.org/viz.v1.1.0.min.js doesn't match stored hash, so not downloading in case it has been modified.
-                Please save an up-to-date version of the visjs library as visjs.js library in the working directory" )
+                Please save an up-to-date version of the viz.js library as vizjs.js library in the working directory" )
       }
     } )
   }
