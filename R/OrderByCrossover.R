@@ -55,11 +55,16 @@ OrderByCrossover<-function(df){
     }
     else {
       ca <- vegan::cca(df[rs, cs])
-      row.seq <- c(row.seq, rs[order(summary(ca)$sites[,
-                                                       1], decreasing = TRUE)])
-      col.seq <- c(col.seq, cs[order(summary(ca)$species[,
-                                                         1], decreasing = TRUE)])
+      row.seq <- c(row.seq, rs[order(vegan::scores(ca, display="sites", choices=1),
+                                     decreasing = TRUE)])
+      col.seq <- c(col.seq, cs[order(vegan::scores(ca, display="species", choices=1),
+                                     decreasing = TRUE)])
+
     }
   }
   return(list('PrimaryOrder'= rownames(df)[row.seq], 'SecondaryOrder' = colnames(df)[col.seq] ))
 }
+
+
+
+
