@@ -6,7 +6,7 @@
 \alias{bipartiteD3-package}
 \title{bipartiteD3: Interactive Bipartite Graphs}
 \description{
-Generates interactive bipartite graphs using the D3 library. Designed for use with the 'bipartite' analysis package. Sources open source 'viz-js' library Adapted from examples at \url{https://bl.ocks.org/NPashaP} (released under GPL-3).
+Generates interactive bipartite graphs using the D3 library. Designed for use with the 'bipartite' analysis package. Includes open source 'viz-js' library Adapted from examples at \url{https://bl.ocks.org/NPashaP} (released under GPL-3).
 }
 \author{
 \strong{Maintainer}: Chris Terry \email{christerry3@btinternet.com}

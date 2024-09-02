@@ -7,9 +7,9 @@
 LoadVisJS()
 }
 \description{
-Downloads source code for the open source vis JavaScript library from vizjs.org if it is not already present
-in working directory. Uses v1.1.0
+Used internally by BP_JS_Writer() and bipartite_D3() to store the necessary JavaScript library
 }
 \details{
-Used internally by BP_JS_Writer() and bipartite_D3()
+This was originally sourced from the open source vis JavaScript library from
+vizjs.org (v1.1.0). However, since this is no longer maintained, the library is hardcoded in here.
 }

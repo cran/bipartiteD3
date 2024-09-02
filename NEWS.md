@@ -1,5 +1,13 @@
 # News
 
+## v0.3.2 
+
+Underlying JS library no longer sourceable - shifted to embedding library directly. 
+
+## v0.3.1 
+
+Patched emergent issue with OrderByCrossover function due to upcoming changes to vegan package
+
 ## v0.3.0 Patch updates to d3
 
  Updates to d3 and r2d3 had deprecated d3.nest - this version points towards version 5 of d3. 
